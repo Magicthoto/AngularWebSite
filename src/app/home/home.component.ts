@@ -1,6 +1,9 @@
 import { Component } from "@angular/core";
 import { DemoObservableService } from "../common/demo-observable.service";
 import { map } from "rxjs/operators";
+import { AuthenticationService } from "../login/authentication.service";
+import { User } from "../login/model/user";
+import { ConsumersService } from "../consumers/consumers.service";
 
 @Component({
   selector: "app-home",
@@ -8,7 +11,15 @@ import { map } from "rxjs/operators";
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent {
-  constructor(private demoOberservale: DemoObservableService) {}
+  constructor(
+    private demoOberservale: DemoObservableService,
+    private authService: AuthenticationService,
+    private consumersService: ConsumersService
+  ) {}
+
+  get currentUser(): User {
+    return this.authService.currentUser;
+  }
 
   clickOnGetObservables(): void {
     this.demoOberservale

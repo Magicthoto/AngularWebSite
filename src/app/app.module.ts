@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MdlModule } from "@angular-mdl/core";
 import { MdlSelectModule } from "@angular-mdl/select";
 import { MdlPopoverModule } from "@angular-mdl/popover";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./login/login.component";
@@ -15,6 +15,10 @@ import { HelpComponent } from "./component/help/help.component";
 import { ButtonComponent } from "./component/button/button.component";
 import { HomeComponent } from "./home/home.component";
 import { AppRoutingModule } from "./app-routing.module";
+import { JWTInterceptorService } from "./common/jwtinterceptor.service";
+import { PhonePipe } from "./common/phone.pipe";
+import { ConsumersFicheComponent } from "./consumers/consumers-fiche/consumers-fiche.component";
+import { ConsumersListComponent } from "./consumers/consumers-list/consumers-list.component";
 
 @NgModule({
   declarations: [
@@ -23,7 +27,10 @@ import { AppRoutingModule } from "./app-routing.module";
     LoginComponent,
     ButtonComponent,
     HelpComponent,
-    HomeComponent
+    HomeComponent,
+    PhonePipe,
+    ConsumersFicheComponent,
+    ConsumersListComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +42,9 @@ import { AppRoutingModule } from "./app-routing.module";
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

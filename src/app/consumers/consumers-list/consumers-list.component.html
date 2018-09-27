@@ -1,0 +1,16 @@
+<div class="table-container">
+  <div class="table-bar">
+    <app-button mdlColor="accent" mdlType="fab" icon="refresh" (click)="refresh()"></app-button>
+  </div>
+  <mdl-list>
+    <mdl-list-item *ngFor="let consumer of currentConsumers">
+      <mdl-list-item-primary-content>
+        <a class="mdl-navigation__link" [routerLink]="['/consumers-fiche', consumer.id]" [routerLinkActive]="'is-active'">
+          <mdl-icon mdl-list-item-icon>person</mdl-icon>
+          {{consumer.firstname}} {{consumer.lastname}}
+        </a>
+      </mdl-list-item-primary-content>
+    </mdl-list-item>
+
+  </mdl-list>
+</div>

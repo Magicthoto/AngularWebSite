@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { User } from "./model/user";
+import { map, take } from "rxjs/operators";
+import { Observable } from "rxjs";
 
 const USER_STORAGE_KEY: string = "angular-crm.user";
 const TOKEN_STORAGE_KEY: string = "angular-crm.token";
@@ -31,16 +33,28 @@ export class AuthenticationService {
     return this.currentUser !== null;
   }
 
-  authentUser(user: User): User {
-    this._currentUser = {
-      userId: 1,
-      login: user.login,
-      password: user.password,
-      lastname: "Dupon",
-      firstname: "Fred"
-    };
-    sessionStorage.setItem(USER_STORAGE_KEY, JSON.stringify(this.currentUser));
-    return this.currentUser;
+  authentUser(user: User): Observable<User> {
+    return this.http
+      .post<AuthentResponse>("/api/auth/login", {
+        email: user.login,
+        password: user.password
+      })
+      .pipe(
+        map((resp: AuthentResponse) => {
+          this._token = resp.token;
+          this._currentUser = resp.user;
+
+          sessionStorage.setItem(
+            USER_STORAGE_KEY,
+            JSON.stringify(this.currentUser)
+          );
+          sessionStorage.setItem(
+            TOKEN_STORAGE_KEY,
+            JSON.stringify(this.currentToken)
+          );
+          return resp.user;
+        })
+      );
   }
 
   disconnect(): void {

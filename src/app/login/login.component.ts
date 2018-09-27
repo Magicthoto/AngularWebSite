@@ -5,6 +5,7 @@ import { AuthenticationService } from "./authentication.service";
 import { User } from "./model/user";
 import { EventEmitter } from "events";
 import { Router } from "@angular/router";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-login",
@@ -19,7 +20,7 @@ export class LoginComponent {
     Validators.minLength(3)
   ]);
 
-  public minLengthPassword: number = 6;
+  public minLengthPassword: number = 3;
 
   public password: FormControl = new FormControl("", [
     Validators.required,
@@ -51,12 +52,19 @@ export class LoginComponent {
       login: this.login.value,
       password: this.password.value
     };
+
     console.log(frontUser);
     const connectedUser = this.authenticationService.authentUser(frontUser);
-
-    console.log(connectedUser);
-    if (connectedUser) {
-      this.router.navigateByUrl("/Home");
-    }
+    connectedUser.subscribe({
+      next: (user: User) => {
+        this.router.navigateByUrl("/Home");
+      },
+      error: error => {
+        console.log("error", error);
+      },
+      complete: () => {
+        console.log("complete");
+      }
+    });
   }
 }
