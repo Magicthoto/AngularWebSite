@@ -15,7 +15,7 @@
         {{consumer.email}}
       </div>
       <div class="mdl-card__supporting-text">
-        {{consumer.phone}}
+        {{consumer.phone | phone}}
       </div>
       <div class="mdl-card__actions mdl-card--border">
         <a class="mdl-navigation__link" [routerLink]="['/consumers-fiche', consumer.id]" [routerLinkActive]="'is-active'">
