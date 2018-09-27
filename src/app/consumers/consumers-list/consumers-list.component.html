@@ -1,16 +1,33 @@
-<div class="table-container">
-  <div class="table-bar">
-    <app-button mdlColor="accent" mdlType="fab" icon="refresh" (click)="refresh()"></app-button>
-  </div>
-  <mdl-list>
-    <mdl-list-item *ngFor="let consumer of currentConsumers">
-      <mdl-list-item-primary-content>
-        <a class="mdl-navigation__link" [routerLink]="['/consumers-fiche', consumer.id]" [routerLinkActive]="'is-active'">
-          <mdl-icon mdl-list-item-icon>person</mdl-icon>
-          {{consumer.firstname}} {{consumer.lastname}}
-        </a>
-      </mdl-list-item-primary-content>
-    </mdl-list-item>
+<div class="mdl-grid">
+  <div class="mdl-layout-spacer"></div>
+  <app-button mdlColor="accent" mdlType="fab" icon="refresh" (click)="refresh()"></app-button>
+  <app-button mdlType="fab" icon="delete" (click)="delete()"></app-button>
+  <div class="mdl-layout-spacer"></div>
+</div>
 
-  </mdl-list>
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell" *ngFor="let consumer of currentConsumers">
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">{{consumer.firstname}} {{consumer.lastname}}</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        {{consumer.email}}
+      </div>
+      <div class="mdl-card__supporting-text">
+        {{consumer.phone}}
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-navigation__link" [routerLink]="['/consumers-fiche', consumer.id]" [routerLinkActive]="'is-active'">
+          <button class="mdl-button mdl-js-button mdl-button--primary">
+            Edit
+          </button>
+        </a>
+      </div>
+      <div class="
+            mdl-card__menu">
+        <input type="checkbox" class="mdl-checkbox__input">
+      </div>
+    </div>
+  </div>
 </div>

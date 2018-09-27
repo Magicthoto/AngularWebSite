@@ -24,9 +24,13 @@
     <!-- Page content -->
 
     <mdl-layout-content>
-
-      <router-outlet></router-outlet>
-
+      <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell--10-col">
+          <router-outlet></router-outlet>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+      </div>
     </mdl-layout-content>
 
   </mdl-layout>
